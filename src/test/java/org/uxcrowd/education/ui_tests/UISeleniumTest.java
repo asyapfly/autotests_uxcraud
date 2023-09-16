@@ -128,7 +128,7 @@ public class UISeleniumTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/headersBtnUrls.csv")
-    @Description("Тест перехода по вкладкам. Лэндинг")
+    @Description("Лэндинг. Хедер. Тест перехода на вкладку {tabName}")
     public void goToHeaderTabs(String tabName, String url){
         driver.get(config.baseUrl);
         wait.until(ExpectedConditions.visibilityOfElementLocated(UX_TESTING_BUTTON));
@@ -137,10 +137,9 @@ public class UISeleniumTest {
         Assertions.assertEquals(driver.getCurrentUrl(), url);
         driver.quit();
     }
-}
 
     @Test
-    @Description("Тест регистрации Тестера")
+    @Description("Тест регистрации тестировщика")
     public void TestRegTester(){
        driver.get(config.baseUrl);
         LandingPage landingPage = new LandingPage(driver, wait);
