@@ -1,4 +1,4 @@
 user_type, username, password
-tester, wergd, dssd
-tester, edsd, sdsdsd
-tester, sdsd, sdsdsd
+client, client,654321Test
+tester,tester,654321Test
+tester, sdsd,654321Test
