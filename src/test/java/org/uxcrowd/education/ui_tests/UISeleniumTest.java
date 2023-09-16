@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.uxcrowd.education.config.ApplicationConfig;
 import org.uxcrowd.education.ui_tests.page.ClientTestsPage;
 import org.uxcrowd.education.ui_tests.page.LandingPage;
+import org.uxcrowd.education.utils.RandomEmailGenerator;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -20,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static org.uxcrowd.education.ui_tests.page.LandingPage.UX_TESTING_BUTTON;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UISeleniumTest {
@@ -62,7 +65,7 @@ public class UISeleniumTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/logins.csv")
+    @CsvFileSource(resources = "/logins.csv", numLinesToSkip = 1)
     public void loginTest(String typeOfClient, String username, String password){
 
         login(username, password);
@@ -121,5 +124,30 @@ public class UISeleniumTest {
 
         Assertions.assertEquals(testsDates, testsDatesCopy, "Sorting users by Ascending Id in users table is incorrect");
 
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/headersBtnUrls.csv")
+    @Description("Тест перехода по вкладкам. Лэндинг")
+    public void goToHeaderTabs(String tabName, String url){
+        driver.get(config.baseUrl);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(UX_TESTING_BUTTON));
+        LandingPage landingPage = new LandingPage(driver, wait);
+        landingPage.clickHeaderButton(tabName);
+        Assertions.assertEquals(driver.getCurrentUrl(), url);
+        driver.quit();
+    }
+}
+
+    @Test
+    @Description("Тест регистрации Тестера")
+    public void TestRegTester(){
+       driver.get(config.baseUrl);
+        LandingPage landingPage = new LandingPage(driver, wait);
+        landingPage.clickHeaderLoginButton();
+        landingPage.clickRegBtn();
+        landingPage.clickTesterRegBtn();
+        landingPage.InputTester(RandomEmailGenerator.generateRandomEmail());
+        landingPage.regTester();
     }
 }
