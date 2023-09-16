@@ -101,5 +101,6 @@ public class UISeleniumTest {
         landingPage.clickHeaderButton(tabName);
         Assertions.assertEquals(driver.getCurrentUrl(), url);
         driver.quit();
+
     }
 }

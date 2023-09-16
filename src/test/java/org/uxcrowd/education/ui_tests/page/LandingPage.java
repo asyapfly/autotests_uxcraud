@@ -55,7 +55,6 @@ public class LandingPage extends AbstractPage{
 
     @Step("Нажать на вкладку UX-тестирование")
     public void clickHeaderButton(String tabName){
-
         switch (tabName) {
             case "UX-тестирования" :
                 driver.findElement(UX_TESTING_BUTTON).click();
