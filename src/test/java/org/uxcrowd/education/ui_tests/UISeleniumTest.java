@@ -21,6 +21,8 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import static org.uxcrowd.education.ui_tests.page.LandingPage.UX_TESTING_BUTTON;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UISeleniumTest {
     private ChromeDriver driver;
@@ -62,7 +64,7 @@ public class UISeleniumTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/logins.csv")
+    @CsvFileSource(resources = "/logins.csv", numLinesToSkip = 1)
     public void loginTest(String typeOfClient, String username, String password){
 
         login(username, password);
@@ -87,5 +89,17 @@ public class UISeleniumTest {
 
         clientTestsPage.clickInterviewCheckBox();
         clientTestsPage.parseTestsDate();
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/headersBtnUrls.csv")
+    @Description("Тест перехода по вкладкам. Лэндинг")
+    public void goToHeaderTabs(String tabName, String url){
+        driver.get(config.baseUrl);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(UX_TESTING_BUTTON));
+        LandingPage landingPage = new LandingPage(driver, wait);
+        landingPage.clickHeaderButton(tabName);
+        Assertions.assertEquals(driver.getCurrentUrl(), url);
+        driver.quit();
     }
 }

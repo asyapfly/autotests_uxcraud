@@ -9,7 +9,7 @@ public class CucumberHooks {
     @Before
     public void setUp() {
         ApplicationConfig config = new ApplicationConfig();
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
         Configuration.browser = "chrome";
         Configuration.timeout = 10_000;
         Configuration.baseUrl = config.baseUrl;
