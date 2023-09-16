@@ -30,6 +30,9 @@ public class ClientTestsPage extends AbstractPage{
     @FindBy(css = "[value=ALL_INTERVIEWS]")
     private WebElement interviewCheckBox;
 
+    @FindBy(css = "span[sorting]")
+    private WebElement dateSortingBtn;
+
     public ClientTestsPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
     }
@@ -42,6 +45,12 @@ public class ClientTestsPage extends AbstractPage{
     public void clickInterviewCheckBox(){
         interviewCheckBox.click();
     }
+
+    @Step("Нажать кнопку сортировки по дате}")
+    public void clickDateSortingBtn(){
+        dateSortingBtn.click();
+    }
+
 
     @Step("Спарсить даты создания тестов со страницы Все тесты")
     public List<Date> parseTestsDate() {
@@ -63,7 +72,7 @@ public class ClientTestsPage extends AbstractPage{
 
             testsDateList.add(date);
         }
-        System.out.println(testsDateList);
+        //System.out.println(testsDateList);
         return testsDateList;
     }
 }

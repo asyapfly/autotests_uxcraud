@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -47,7 +47,7 @@ public class UISeleniumTest {
 
     @AfterEach
     public void tearDown() {
-        driver.quit();
+       // driver.quit();
     }
 
     @Step
@@ -78,14 +78,48 @@ public class UISeleniumTest {
     }
 
     @Test
-    @Description("Тест сортировки даты на странциы Все тесты. ЛКК")
-    public void sortTestsByDate(){
+    @Description("Тест сортировки даты по убыванию на странциы Все тесты. ЛКК")
+    public void sortDescendingByDate_Test(){
         login(config.clientUsername, config.clientPass);
 
         ClientTestsPage clientTestsPage = new ClientTestsPage(driver, wait);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=MuiTable-root]")));
 
         clientTestsPage.clickInterviewCheckBox();
-        clientTestsPage.parseTestsDate();
+
+        List<Date> testsDates = clientTestsPage.parseTestsDate();
+
+        List<Date> testsDatesCopy = new ArrayList<>(testsDates);
+
+        testsDates.sort(Collections.reverseOrder());
+
+        System.out.println(testsDates);
+
+        Assertions.assertEquals(testsDates, testsDatesCopy, "Sorting users by Descending Id in users table is incorrect");
+
+    }
+
+    @Test
+    @Description("Тест сортировки даты по возрастанию на странце Все тесты. ЛКК")
+    public void sortAscendingByDate_Test(){
+        login(config.clientUsername, config.clientPass);
+
+        ClientTestsPage clientTestsPage = new ClientTestsPage(driver, wait);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=MuiTable-root]")));
+
+        clientTestsPage.clickInterviewCheckBox();
+
+        clientTestsPage.clickDateSortingBtn();
+
+        List<Date> testsDates = clientTestsPage.parseTestsDate();
+
+        List<Date> testsDatesCopy = new ArrayList<>(testsDates);
+
+        testsDates.sort(Comparator.naturalOrder());
+
+        System.out.println(testsDates);
+
+        Assertions.assertEquals(testsDates, testsDatesCopy, "Sorting users by Ascending Id in users table is incorrect");
+
     }
 }
