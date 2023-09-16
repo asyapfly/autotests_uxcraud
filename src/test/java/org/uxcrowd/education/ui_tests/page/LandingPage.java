@@ -20,6 +20,18 @@ public class LandingPage extends AbstractPage{
     @FindBy(css = "[ng-click=\"login()\"]")
     private WebElement submitBtn;
 
+    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/div[1]/section[1]/label")
+    private WebElement regButton;
+
+    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/div[2]/section[2]/div[2]/button")
+    private WebElement regTesterButton;
+
+    @FindBy(css = "#emails")
+    private WebElement TesterEmailInput;
+
+    @FindBy(xpath = "//*[@id=\"form_register_customer\"]/button")
+    private WebElement RegisterTester;
+
     public LandingPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
     }
@@ -45,4 +57,25 @@ public class LandingPage extends AbstractPage{
     public void submitForm(){
         submitBtn.click();
     }
+
+    @Step("Нажать кнопку Зарегистрироваться")
+    public void clickRegBtn(){
+        regButton.click();
+    }
+    @Step("Нажать кнопку Зарегистрироваться")
+    public void clickTesterRegBtn(){
+        regTesterButton.click();
+    }
+    @Step("ВВести емаил (email)")
+    public void InputTester(String email){
+        TesterEmailInput.sendKeys(email);
+    }
+    @Step("Зарегистрировать Тестировщика")
+    public void regTester(){
+        RegisterTester.click();
+    }
+
+
+
+
 }

@@ -11,7 +11,5 @@
 
     Примеры:
       | userType | username | pass |
-      | client | client1 | Test.. |
-      | tester | tester2 | Test... |
-      | client | client2 | Test... |
-      | tester | tester2 | Test... |
+      | client | client | 654321Test |
+      | tester | tester | 654321Test |
