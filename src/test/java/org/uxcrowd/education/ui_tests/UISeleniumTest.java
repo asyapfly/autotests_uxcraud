@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.uxcrowd.education.config.ApplicationConfig;
 import org.uxcrowd.education.ui_tests.page.ClientTestsPage;
 import org.uxcrowd.education.ui_tests.page.LandingPage;
+import org.uxcrowd.education.utils.RandomEmailGenerator;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -101,5 +102,18 @@ public class UISeleniumTest {
         landingPage.clickHeaderButton(tabName);
         Assertions.assertEquals(driver.getCurrentUrl(), url);
         driver.quit();
+    }
+}
+
+    @Test
+    @Description("Тест регистрации Тестера")
+    public void TestRegTester(){
+       driver.get(config.baseUrl);
+        LandingPage landingPage = new LandingPage(driver, wait);
+        landingPage.clickHeaderLoginButton();
+        landingPage.clickRegBtn();
+        landingPage.clickTesterRegBtn();
+        landingPage.InputTester(RandomEmailGenerator.generateRandomEmail());
+        landingPage.regTester();
     }
 }
