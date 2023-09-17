@@ -51,7 +51,6 @@ public class ClientTestsPage extends AbstractPage{
         dateSortingBtn.click();
     }
 
-
     @Step("Спарсить даты создания тестов со страницы Все тесты")
     public List<Date> parseTestsDate() {
         List<WebElement> testTrs = findTestsTrs();
@@ -72,7 +71,6 @@ public class ClientTestsPage extends AbstractPage{
 
             testsDateList.add(date);
         }
-        //System.out.println(testsDateList);
         return testsDateList;
     }
 }

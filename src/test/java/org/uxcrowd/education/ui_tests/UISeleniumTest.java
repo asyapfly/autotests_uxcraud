@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.uxcrowd.education.config.ApplicationConfig;
 import org.uxcrowd.education.ui_tests.page.ClientTestsPage;
 import org.uxcrowd.education.ui_tests.page.LandingPage;
+import org.uxcrowd.education.ui_tests.page.TesterProfilePage;
 import org.uxcrowd.education.utils.RandomEmailGenerator;
 
 import java.net.MalformedURLException;
@@ -23,6 +24,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.uxcrowd.education.ui_tests.page.LandingPage.UX_TESTING_BUTTON;
+import static org.uxcrowd.education.ui_tests.page.TesterProfilePage.SUCCESS_ALERT_LOCATOR;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UISeleniumTest {
@@ -50,7 +52,7 @@ public class UISeleniumTest {
 
     @AfterEach
     public void tearDown() {
-       // driver.quit();
+        driver.quit();
     }
 
     @Step
@@ -65,7 +67,7 @@ public class UISeleniumTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/logins.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources =  "/logins.csv", numLinesToSkip = 1)
     public void loginTest(String typeOfClient, String username, String password){
 
         login(username, password);
@@ -148,5 +150,30 @@ public class UISeleniumTest {
         landingPage.clickTesterRegBtn();
         landingPage.InputTester(RandomEmailGenerator.generateRandomEmail());
         landingPage.regTester();
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/testerProfileTestsData.csv", numLinesToSkip = 1)
+    @Description("ЛК Тестеровщика. Проверка сохранения профиля ")
+    @Step("Сохранить тестировщика с ФИО {fio}, датой рождения {birthDate}, населенным пунктом {city}")
+    public void testerProfileTest(String fio, String birthDate, String city){
+        TesterProfilePage testerProfilePage = new TesterProfilePage(driver, wait);
+
+        driver.get(config.baseUrl);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(UX_TESTING_BUTTON));
+
+        login(config.testerUsername, config.testerPassword);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a[href=\"/app-tester-home/tester-profile\"]")));
+
+        testerProfilePage.clickProfileMenuBtn();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#tester-profile-data")));
+
+        testerProfilePage.fillFioInput(fio);
+        testerProfilePage.fillDateInput(birthDate);
+        testerProfilePage.fillCityInput(city);
+
+        testerProfilePage.saveBtnClick();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SUCCESS_ALERT_LOCATOR));
+        Assertions.assertTrue( driver.findElement(SUCCESS_ALERT_LOCATOR).isDisplayed());
     }
 }
