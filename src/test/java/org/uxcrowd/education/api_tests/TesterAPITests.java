@@ -46,8 +46,8 @@ public class TesterAPITests {
                 .contentType("application/x-www-form-urlencoded; charset=utf-8")
                 .header("X-Xsrf-Token", 1)
                 .cookie("XSRF-TOKEN", 1)
-                .formParam("username", "tester")
-                .formParam("password", "654321Test")
+                .formParam("username", config.testerUsername)
+                .formParam("password", config.testerPassword)
                 .formParam("remember-me", "undefined")
                 .formParam("submit", "Login")
                 .when()
@@ -61,7 +61,6 @@ public class TesterAPITests {
     @Description("Отправка GET запроса на получение данных из профиля тестировщика")
     public void getTesterProfileInfo_UXCrowdTest () {
         RestAssured.given()
-                //.cookies(cookies)
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/v2/tester/profile")
