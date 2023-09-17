@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LandingPage extends AbstractPage{
@@ -14,6 +15,10 @@ public class LandingPage extends AbstractPage{
     public static final By.ByXPath UX_PRICE_BUTTON = new By.ByXPath("//*[@id=\"top\"]/div[1]/div/div/div[1]/ul/li[3]/a");
     public static final By.ByXPath UX_FAQ_BUTTON = new By.ByXPath("//*[@id=\"top\"]/div[1]/div/div/div[1]/ul/li[4]/a");
     public static final By.ByXPath UX_TESTING_SITE_BUTTON = new By.ByXPath("//*[@id=\"top\"]/div[1]/div/div/div[1]/ul/li[5]/a");
+
+    public static final By.ByCssSelector SUCCESS_REG_ALERT_LOCATOR = new By.ByCssSelector("[ng-bind-html=\"successMessage.header\"]");
+    public static final By.ByCssSelector LOGIN_HEADER_BUTTON = new By.ByCssSelector("#header-lk-button");
+    public static final By.ByXPath REGISTER_MODAL_BUTTON = new By.ByXPath("/html/body/div[1]/div/div/div/div/div[1]/section[1]/label");
 
     @FindBy(css = "#header-lk-button")
     private WebElement headerLoginButton;
@@ -27,10 +32,7 @@ public class LandingPage extends AbstractPage{
     @FindBy(css = "[ng-click=\"login()\"]")
     private WebElement submitBtn;
 
-    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/div[1]/section[1]/label")
-    private WebElement regButton;
-
-    @FindBy(xpath = "/html/body/div[1]/div/div/div/div/div[2]/section[2]/div[2]/button")
+    @FindBy(css = "div:nth-child(2)  button")
     private WebElement regTesterButton;
 
     @FindBy(css = "#emails")
@@ -45,7 +47,8 @@ public class LandingPage extends AbstractPage{
 
     @Step("Нажать кнопку 'Войти' в хедере")
     public void clickHeaderLoginButton(){
-        headerLoginButton.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_HEADER_BUTTON));
+        driver.findElement(LOGIN_HEADER_BUTTON).click();
     }
 
     @Step("Заполнить поле ввода логина")
@@ -88,8 +91,9 @@ public class LandingPage extends AbstractPage{
     }
 
     @Step("Нажать кнопку Зарегистрироваться")
-    public void clickRegBtn(){
-        regButton.click();
+    public void clickModalRegBtn(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(REGISTER_MODAL_BUTTON));
+        driver.findElement(REGISTER_MODAL_BUTTON).click();
     }
     @Step("Нажать кнопку Зарегистрироваться")
     public void clickTesterRegBtn(){

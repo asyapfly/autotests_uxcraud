@@ -23,6 +23,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static org.uxcrowd.education.ui_tests.page.LandingPage.SUCCESS_REG_ALERT_LOCATOR;
 import static org.uxcrowd.education.ui_tests.page.LandingPage.UX_TESTING_BUTTON;
 import static org.uxcrowd.education.ui_tests.page.TesterProfilePage.SUCCESS_ALERT_LOCATOR;
 
@@ -45,9 +46,7 @@ public class UISeleniumTest {
         chromeOptions.addArguments("--remote-allow-origins=*");
         chromeOptions.addArguments("--start-maximized");
         driver = new ChromeDriver(chromeOptions);
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.MINUTES);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.MINUTES);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(240));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     @AfterEach
@@ -87,8 +86,10 @@ public class UISeleniumTest {
     public void sortDescendingByDate_Test(){
         login(config.clientUsername, config.clientPass);
 
-        ClientTestsPage clientTestsPage = new ClientTestsPage(driver, wait);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=MuiTable-root]")));
+        WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(240));
+
+        ClientTestsPage clientTestsPage = new ClientTestsPage(driver, customWait);
+        customWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=MuiTable-root]")));
 
         clientTestsPage.clickInterviewCheckBox();
 
@@ -109,8 +110,10 @@ public class UISeleniumTest {
     public void sortAscendingByDate_Test(){
         login(config.clientUsername, config.clientPass);
 
-        ClientTestsPage clientTestsPage = new ClientTestsPage(driver, wait);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=MuiTable-root]")));
+        WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(240));
+
+        ClientTestsPage clientTestsPage = new ClientTestsPage(driver, customWait);
+        customWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[class=MuiTable-root]")));
 
         clientTestsPage.clickInterviewCheckBox();
 
@@ -146,10 +149,13 @@ public class UISeleniumTest {
        driver.get(config.baseUrl);
         LandingPage landingPage = new LandingPage(driver, wait);
         landingPage.clickHeaderLoginButton();
-        landingPage.clickRegBtn();
+        landingPage.clickModalRegBtn();
         landingPage.clickTesterRegBtn();
         landingPage.InputTester(RandomEmailGenerator.generateRandomEmail());
         landingPage.regTester();
+        WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(240));
+        customWait.until(ExpectedConditions.visibilityOfElementLocated(SUCCESS_REG_ALERT_LOCATOR));
+        Assertions.assertEquals(driver.getCurrentUrl(), "https://dev-t.uxcrowd.ru/success_tester");
     }
 
     @ParameterizedTest

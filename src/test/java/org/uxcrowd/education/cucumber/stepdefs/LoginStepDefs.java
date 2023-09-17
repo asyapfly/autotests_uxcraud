@@ -68,4 +68,41 @@ public class LoginStepDefs {
     public void cleanCookie() {
         Selenide.clearBrowserCookies();
     }
+
+    @Дано("пользователь заходит на лендинг")
+    public void пользовательЗаходитНаЛендинг() {
+        open("/");
+    }
+
+    @Затем("кликает в хедере кнопку {string}")
+    public void clickUXHeaderBtn(String arg0) {
+        $("#nl-header-links > li:nth-child(1) > a")
+                .should(Condition.enabled)
+                .click();
+    }
+
+    @Затем("кликает спойлер {string}")
+    public void spoilerClick(String arg0) {
+        $x("//*[@id=\"top\"]/div[2]/div/section[2]/div/div/div[3]/ul/li[1]").scrollTo();
+        $x("//*[@id=\"top\"]/div[2]/div/section[2]/div/div/div[3]/ul/li[5]").click();
+    }
+
+    @Затем("кликает кнопку Метрики SUS и SUPR-Qна странице")
+    public void clickStrMetrica() {
+        $("li a[href=\"#about_metrics\"]")
+                .should(Condition.enabled)
+                .click();
+    }
+
+    @Затем("кликает ссылку Узнать подробнее")
+    public void clickToMetricsPage() {
+        $x("//*[@id=\"about_metrics\"]/div/ul/li[4]/a")
+                .should(Condition.enabled)
+                .click();
+    }
+
+    @Тогда("попадает на страницу с метриками")
+    public void goToMetricsLanding() {
+        webdriver().shouldHave(url("https://dev-t.uxcrowd.ru/metrics"));
+    }
 }
