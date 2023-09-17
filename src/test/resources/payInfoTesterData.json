@@ -1,0 +1,24 @@
+{
+  "id": 698510,
+  "fio": "Муся Пусиковна",
+  "pass": "1111111111",
+  "getCodeDepartment": "211212",
+  "issuedBy": "21",
+  "inn": "131348545222",
+  "snils": "99999999999",
+  "bank": "Альфа-Бан",
+  "bic": "123456780",
+  "getDataPass": "12.09.2012",
+  "account": "40702810562001234569",
+  "corrAccount": "30101810400000000227",
+  "address": "awd ad",
+  "factAddress": "Ижевск, Советская, 35",
+  "phone": "+7 (323) 232-32-33",
+  "tester": {
+    "id": 493957551
+  },
+  "agree": true,
+  "confirmed": false,
+  "filled": false,
+  "updated": "2023-09-07T13:24:47.379382Z"
+}
