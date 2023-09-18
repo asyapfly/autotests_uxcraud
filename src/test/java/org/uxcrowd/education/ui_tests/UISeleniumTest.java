@@ -47,6 +47,8 @@ public class UISeleniumTest {
         chromeOptions.addArguments("--start-maximized");
         driver = new ChromeDriver(chromeOptions);
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.MINUTES);
+        driver.manage().timeouts().implicitlyWait(10,TimeUnit.MINUTES);
     }
 
     @AfterEach
