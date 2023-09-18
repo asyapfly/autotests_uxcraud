@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TesterProfilePage extends AbstractPage {
 
-    public static final By.ByCssSelector SUCCESS_ALERT_LOCATOR = new By.ByCssSelector("[ng-bind-html=\"successMessage.header\"]");
+    public static final By.ByCssSelector SUCCESS_ALERT_LOCATOR = new By.ByCssSelector("div[ng-show=profileSaved]");
 
     @FindBy(css = "input[ng-model=\"profile.fio\"]")
     private WebElement fioInput;
